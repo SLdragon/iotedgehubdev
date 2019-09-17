@@ -24,8 +24,6 @@ steps:
     inputs:
       gitHubConnection: 'GitConnection'
       tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$'
-      action: edit
-      tag: '$(BUILD.SOURCEBRANCH)'
       releaseNotesSource: input
       assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
       isPreRelease: true
@@ -34,8 +32,6 @@ steps:
     inputs:
       gitHubConnection: 'GitConnection'
       tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+$'
-      action: edit
-      tag: '$(BUILD.SOURCEBRANCH)'
       releaseNotesSource: input
       assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
 

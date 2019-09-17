@@ -21,6 +21,14 @@ steps:
   - task: GitHubRelease@0
     inputs:
       gitHubConnection: 'GitConnection'
-      tagPattern: 'v?[0-9]+\.[0-9]+\.[0-9]+'
+      tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$'
+      releaseNotesSource: input
+      assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'
+      isPreRelease: true
+
+  - task: GitHubRelease@0
+    inputs:
+      gitHubConnection: 'GitConnection'
+      tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+$'
       releaseNotesSource: input
       assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'

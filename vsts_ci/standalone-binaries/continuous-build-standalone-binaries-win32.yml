@@ -6,15 +6,14 @@ steps:
 
   - powershell: |
       $env:Path += ";C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86"
+      $VERSION_TAG = git describe --tags
+      Write-Host "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
       python -m venv ./venv
       .\venv\Scripts\activate
       python -m pip install --upgrade pip
       pip install -e .
       pip install -r requirements.txt
       pyinstaller iotedgehubdev.spec
-
-  - script: |
-      VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
 
   - task: ArchiveFiles@2
     inputs:

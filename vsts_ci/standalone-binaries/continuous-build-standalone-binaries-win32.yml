@@ -1,0 +1,26 @@
+steps:
+  - task: UsePythonVersion@0
+    displayName: 'Use Python 3.x'
+    inputs:
+      architecture: x86
+
+  - powershell: |
+      $env:Path += ";C:\Program Files (x86)\Windows Kits\10\Redist\ucrt\DLLs\x86"
+      python -m venv ./venv
+      .\venv\Scripts\activate
+      python -m pip install --upgrade pip
+      pip install -e .
+      pip install -r requirements.txt
+      pyinstaller iotedgehubdev.spec
+
+  - task: ArchiveFiles@2
+    inputs:
+      rootFolderOrFile: 'standalone-binaries/iotedgehubdev'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'
+
+  - task: GitHubRelease@0
+    inputs:
+      gitHubConnection: 'GitConnection'
+      tagPattern: 'v?[0-9]+\.[0-9]+\.[0-9]+'
+      releaseNotesSource: input
+      assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'

@@ -27,6 +27,7 @@ steps:
       releaseNotesSource: input
       assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
       isPreRelease: true
+      addChangeLog: false
 
   - task: GitHubRelease@0
     inputs:
@@ -34,4 +35,5 @@ steps:
       tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+$'
       releaseNotesSource: input
       assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
+      addChangeLog: false
 

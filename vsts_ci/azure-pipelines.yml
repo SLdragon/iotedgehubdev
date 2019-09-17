@@ -4,4 +4,4 @@ jobs:
       vmImage: vs2017-win2016
     steps:
       - template: standalone-binaries/continuous-build-standalone-binaries-win32.yml
-
+    condition: and(startsWith(variables['Build.SourceBranch'], 'refs/tags/'), startsWith(variables['Build.SourceBranch'], 'refs/tags/'))

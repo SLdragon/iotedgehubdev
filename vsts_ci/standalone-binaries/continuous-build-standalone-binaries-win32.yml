@@ -13,17 +13,20 @@ steps:
       pip install -r requirements.txt
       pyinstaller iotedgehubdev.spec
 
+  - script: |
+      VERSION_TAG=`git describe --tags` && echo "##vso[task.setvariable variable=VERSION_TAG]$VERSION_TAG"
+
   - task: ArchiveFiles@2
     inputs:
       rootFolderOrFile: 'standalone-binaries/iotedgehubdev'
-      archiveFile: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'
+      archiveFile: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
 
   - task: GitHubRelease@0
     inputs:
       gitHubConnection: 'GitConnection'
       tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+-rc[0-9]+$'
       releaseNotesSource: input
-      assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'
+      assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
       isPreRelease: true
 
   - task: GitHubRelease@0
@@ -31,4 +34,5 @@ steps:
       gitHubConnection: 'GitConnection'
       tagPattern: '^v?[0-9]+\.[0-9]+\.[0-9]+$'
       releaseNotesSource: input
-      assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-win32-ia32.zip'
+      assets: '$(Build.ArtifactStagingDirectory)/iotedgehubdev-$(VERSION_TAG)-win32-ia32.zip'
+
